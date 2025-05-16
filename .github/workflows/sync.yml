@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 4 * * *" # At 12PM UTC+8
+    - cron: "0 4 * * *" # 每天定时检查（北京时间中午12点）
   workflow_dispatch:
 
 jobs:
@@ -15,18 +15,16 @@ jobs:
     if: ${{ github.event.repository.fork }}
 
     steps:
-      # Step 1: run a standard checkout action
       - name: Checkout target repo
         uses: actions/checkout@v4
 
-      # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
         with:
           upstream_sync_repo: LibreSpark/LibreTV
           upstream_sync_branch: main
-          target_sync_branch: main
+          target_sync_branch: my_lib           # 这里改为 my_lib 分支
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Sync check
